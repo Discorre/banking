@@ -11,11 +11,10 @@ import bcrypt
 from typing import List
 
 # Настройки JWT
-SECRET_KEY = "mysecretkey12312312313"  # В реальном проекте храните секрет в переменной окружения
+SECRET_KEY = "mysecretkey12312312313"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# Параметры подключения к базе PostgreSQL
 DATABASE_URL = "postgresql://discorre:0412@localhost:5432/cyberbank"
 
 engine = create_engine(DATABASE_URL)
@@ -27,7 +26,7 @@ app = FastAPI()
 # Разрешаем CORS (на время разработки)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # На продакшене укажите список разрешённых доменов
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -126,8 +125,6 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if user is None:
         raise credentials_exception
     return user
-
-# Эндпоинты
 
 # Регистрация пользователя
 @app.post("/register", response_model=Token)
